@@ -6,6 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { ShovelIcon } from "lucide-react";
 
 export default function SearchBar() {
   return (
@@ -75,7 +76,7 @@ export default function SearchBar() {
             size="lg"
             className="mt-2 w-full md:mt-0 md:ml-auto md:w-auto"
           >
-            Explore
+           <ShovelIcon/> Explore
           </Button>
         </div>
       </div>

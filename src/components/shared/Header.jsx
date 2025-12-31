@@ -11,7 +11,7 @@ function Header() {
   const isLoggedIn = false;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white md:bg-white/20 md:backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b bg-white/40 backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-8xl items-center justify-between px-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
@@ -44,9 +44,11 @@ function Header() {
               <User2 className="h-5 w-5" />
             </Button>
           ) : (
+            <Link to={"/signin"}>
             <Button variant="outline">
-              Sign In <LogIn size={14}  />
+              Sign In <LogIn size={14} />
             </Button>
+            </Link>
           )}
         </div>
 
@@ -64,7 +66,7 @@ function Header() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden absolute inset-x-0 top-16 border-b bg-white backdrop-blur-3xl shadow-lg">
+        <div className="md:hidden absolute inset-x-0 top-16 border-b bg-background/70 backdrop-blur-md shadow-sm">
           <ul className="flex flex-col gap-4 px-6 py-6 text-sm font-medium">
             {navlinks.map((link) => (
               <li key={link.id}>
@@ -85,9 +87,11 @@ function Header() {
                   Account
                 </Button>
               ) : (
-                <Button className="w-full bg-orange-600">
-                  Sign In <LogIn size={14}  />
+                <Link to={"/signin"}>
+                <Button className="w-full bg-primary text-primary-foreground">
+                  Sign In <LogIn size={14} />
                 </Button>
+                </Link>
               )}
             </div>
           </ul>

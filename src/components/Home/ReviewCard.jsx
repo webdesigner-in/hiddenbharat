@@ -8,7 +8,7 @@ export default function ReviewCard({ review }) {
     .toUpperCase();
 
   return (
-    <div className="h-full rounded-2xl border bg-card p-6">
+    <div className="h-full rounded-2xl border bg-white/10 backdrop-blur-3xl p-6">
       {/* Review text */}
       <p className="text-muted-foreground leading-relaxed">
         “{review.text}”

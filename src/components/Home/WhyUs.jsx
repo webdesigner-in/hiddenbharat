@@ -1,101 +1,56 @@
-import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 
-export default function WhyChooseUs() {
+const data = [
+  "Carefully researched, less-crowded destinations",
+  "Trips planned around pace, season, and comfort",
+  "No tourist traps or unnecessary luxury",
+  "Honest guidance from start to finish",
+];
+
+const Points = () => {
+  return (
+    <ul className="mt-6 space-y-4 text-sm text-muted-foreground">
+      {data.map((p, index) => (
+        <div key={index} className="flex gap-2">
+          <CheckCircle className="text-green-800" size={16}/> <li>{p}</li>
+        </div>
+      ))}
+    </ul>
+  );
+};
+
+export default function WhyUs() {
   return (
     <section>
-      <div className="mx-auto max-w-5xl px-6 py-24">
-        {/* Heading */}
-        <div className="mb-20 text-center">
-          <h2 className="text-3xl font-semibold tracking-tight md:text-5xl">
-            Why Travelers Choose HiddenBharat
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Not because we offer more options —
-            but because we remove the confusion.
-          </p>
-        </div>
+      <div className="mx-auto max-w-6xl px-6 py-14">
+        <div className="grid items-center gap-12 md:grid-cols-2">
+          {/* LEFT: CONTENT */}
+          <div>
+            <h2 className="text-2xl  font-semibold md:text-5xl">
+              Why choose HiddenBharat
+            </h2>
 
-        {/* Story Timeline */}
-        <div className="space-y-16">
-          <StoryBlock
-            label="THE USUAL PROBLEM"
-            title="Planning travel feels overwhelming"
-            description="Too many destinations. Conflicting advice. Tourist traps disguised as must-see places. Travel planning often becomes stressful before the journey even begins."
-          />
+            <p className="mt-3 max-w-md text-sm text-muted-foreground">
+              Travel doesn’t need more options. It needs better decisions.
+            </p>
+            <Points />
+          </div>
 
-          <StoryBlock
-            label="OUR APPROACH"
-            title="We simplify travel decisions"
-            description="HiddenBharat curates destinations through real research, filters out overcrowded routes, and designs trips around how people actually like to travel — calmly and meaningfully."
-            highlight
-          />
+          {/* RIGHT: IMAGE */}
+          <div className="relative flex justify-center">
+            {/* Subtle blur background */}
+            <div className="absolute inset-0 flex justify-center">
+              <div className="h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
+            </div>
 
-          <StoryBlock
-            label="WHAT YOU EXPERIENCE"
-            title="Travel that feels intentional"
-            description="You move at the right pace, visit places with depth, and experience destinations without pressure, rush, or unnecessary luxury."
-          />
-        </div>
-
-        {/* CENTERED IMAGE (PERFECTLY ALIGNED) */}
-        <div className="my-24 flex justify-center">
-          <img
-            src="/whytochooseus.svg"
-            alt="Why choose HiddenBharat"
-            className="w-full max-w-md opacity-90"
-          />
-        </div>
-
-        {/* Key Differentiators */}
-        <div className="grid gap-10 md:grid-cols-3">
-          <Point
-            title="Less Crowded Places"
-            text="We focus on destinations that feel calm, authentic, and worth your time."
-          />
-          <Point
-            title="Personalized Planning"
-            text="Every itinerary is shaped around your interests, comfort, and season."
-          />
-          <Point
-            title="Honest Guidance"
-            text="No upselling. No false urgency. Just clear, research-driven advice."
-          />
-        </div>
-
-        {/* CTA */}
-        <div className="mt-24 text-center">
-          <Button size="lg">Start Planning Your Trip</Button>
+            <img
+              src="/whytochooseus.svg"
+              alt="Why choose HiddenBharat"
+              className="relative z-10 w-full max-w-xl"
+            />
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-/* ---------- Sub Components ---------- */
-
-function StoryBlock({ label, title, description, highlight }) {
-  return (
-    <div className="max-w-3xl">
-      <p className="mb-2 text-sm font-semibold tracking-wide text-primary">
-        {label}
-      </p>
-      <h3 className={`text-2xl font-medium ${highlight ? "text-primary" : ""}`}>
-        {title}
-      </h3>
-      <p className="mt-3 text-muted-foreground">
-        {description}
-      </p>
-    </div>
-  );
-}
-
-function Point({ title, text }) {
-  return (
-    <div>
-      <h4 className="text-lg font-medium">{title}</h4>
-      <p className="mt-2 text-sm text-muted-foreground">
-        {text}
-      </p>
-    </div>
   );
 }
