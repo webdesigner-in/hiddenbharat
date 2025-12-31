@@ -1,27 +1,21 @@
+import { useEffect, useState } from "react";
 import PlaceCarousel from "@/components/Destinations/PlaceCrousel";
-import { hiddenPlaces } from "@/data";
+import {
+  getAllDestinations,
+  getFeaturedDestination,
+  getByTag,
+} from "@/services/destination.service";
 
-function Section({ title, subtitle, data, tone = "default" }) {
+function Section({ title, description, data }) {
+  if (!data.length) return null;
+
   return (
-    <section
-      className={`py-16 ${
-        tone === "warm"
-          ? "bg-primary/5"
-          : tone === "soft"
-          ? "bg-muted/40"
-          : ""
-      }`}
-    >
+    <section className="py-16">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold md:text-3xl">
-            {title}
-          </h2>
-          <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-            {subtitle}
-          </p>
-        </div>
-
+        <h2 className="mb-2 text-2xl font-semibold">{title}</h2>
+        <p className="mb-6 max-w-xl text-sm text-muted-foreground">
+          {description}
+        </p>
         <PlaceCarousel data={data} />
       </div>
     </section>
@@ -29,45 +23,60 @@ function Section({ title, subtitle, data, tone = "default" }) {
 }
 
 export default function Destinations() {
+  const [all, setAll] = useState([]);
+  const [featured, setFeatured] = useState([]);
+  const [nature, setNature] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+
+      const [a, f, n] = await Promise.all([
+        getAllDestinations(),
+        getFeaturedDestination(),
+        getByTag("Nature"),
+      ]);
+
+      setAll(a);
+      setFeatured(f);
+      setNature(n);
+
+      setLoading(false);
+    }
+
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-[60vh] items-center justify-center text-muted-foreground">
+        Loading destinations…
+      </div>
+    );
+  }
+
   return (
     <main>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 to-background">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <h1 className="max-w-3xl text-4xl font-semibold md:text-6xl">
-            Discover places
-            <br />
-            beyond the usual routes
-          </h1>
-
-          <p className="mt-6 max-w-xl text-muted-foreground">
-            Thoughtfully curated destinations across India — chosen for
-            calmness, culture, and authenticity.
+      <section className="py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <h1 className="text-4xl font-semibold">Destinations</h1>
+          <p className="mt-3 max-w-xl text-muted-foreground">
+            Discover handpicked destinations across India.
           </p>
         </div>
       </section>
 
-      {/* MOST LOVED */}
       <Section
-        title="Most Loved by Travelers"
-        subtitle="Destinations that travelers consistently connect with and recommend."
-        data={hiddenPlaces.slice(0, 6)}
-        tone="warm"
+        title="Nature & Landscapes"
+        description="Mountains, valleys, beaches and forests"
+        data={nature}
       />
 
-      {/* HIDDEN GEMS */}
       <Section
-        title="Hidden Gems of India"
-        subtitle="Less crowded, culturally rich places you won’t find on typical travel lists."
-        data={hiddenPlaces.slice(2, 8)}
-      />
-
-      {/* PACKAGES */}
-      <Section
-        title="Thoughtfully Designed Trips"
-        subtitle="Curated journeys that balance comfort, discovery, and pace."
-        data={hiddenPlaces.slice(1, 7)}
-        tone="soft"
+        title="Explore All Destinations"
+        description="Browse all available destinations"
+        data={all}
       />
     </main>
   );

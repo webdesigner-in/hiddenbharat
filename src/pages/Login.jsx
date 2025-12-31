@@ -3,14 +3,30 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/store/auth.store";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const { register, handleSubmit } = useForm();
+  const { login, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const { email, password } = data;
+      await login(email, password);
+      navigate("/");
+      toast.success("Loggedin Succesfull");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleGoogleSubmit = async () => {
+    await loginWithGoogle();
   };
 
   return (
@@ -27,10 +43,7 @@ function Login() {
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -57,13 +70,13 @@ function Login() {
               {/* Forgot password */}
               <div className="text-right">
                 <Link to={"/forgot-password"}>
-                <button
-                  type="button"
-                  className="text-sm text-primary hover:underline cursor-pointer"
-                >
-                  Forgot password?
-                </button>
-              </Link>
+                  <button
+                    type="button"
+                    className="text-sm text-primary hover:underline cursor-pointer"
+                  >
+                    Forgot password?
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -79,20 +92,23 @@ function Login() {
             {/* Divider */}
             <div className="relative flex items-center">
               <div className="grow border-t" />
-              <span className="mx-3 text-xs text-muted-foreground">
-                OR
-              </span>
+              <span className="mx-3 text-xs text-muted-foreground">OR</span>
               <div className="grow border-t" />
             </div>
 
             {/* Google Login */}
             <Button
+              onClick={handleGoogleSubmit}
               type="button"
               variant="outline"
               size="lg"
               className="w-full lg:cursor-pointer"
             >
-              <img className="w-6 h-6" src="google-icon.svg" alt="Google Login Illustratoin"/>
+              <img
+                className="w-6 h-6"
+                src="google-icon.svg"
+                alt="Google Login Illustratoin"
+              />
               Continue with Google
             </Button>
 
@@ -100,9 +116,9 @@ function Login() {
             <p className="text-center text-sm text-muted-foreground">
               Don’t have an account?{" "}
               <Link to={"/signup"}>
-              <span className="cursor-pointer text-primary hover:underline">
-                Create one
-              </span>
+                <span className="cursor-pointer text-primary hover:underline">
+                  Create one
+                </span>
               </Link>
             </p>
           </form>

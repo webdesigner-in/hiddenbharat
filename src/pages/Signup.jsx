@@ -3,14 +3,30 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/store/auth.store";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function Signup() {
   const { register, handleSubmit } = useForm();
+  const { signup, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const { fullname, email, password } = data;
+      await signup(email, password, fullname);
+      navigate("/");
+      toast.success("Account Created");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleGoogleSubmit = async () => {
+    await loginWithGoogle();
   };
 
   return (
@@ -90,6 +106,7 @@ function Signup() {
 
             {/* Google Login */}
             <Button
+              onClick={handleGoogleSubmit}
               type="button"
               variant="outline"
               size="lg"
@@ -106,7 +123,7 @@ function Signup() {
             {/* Helper */}
             <p className="text-center text-sm text-muted-foreground">
               ALready have an account?{" "}
-              <Link to={"/signin"}>
+              <Link to={"/login"}>
                 <span className="cursor-pointer text-primary hover:underline">
                   Log In
                 </span>

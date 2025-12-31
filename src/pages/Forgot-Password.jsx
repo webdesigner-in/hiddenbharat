@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 function ForgotPassword() {
   const { register, handleSubmit } = useForm();
@@ -49,12 +50,14 @@ function ForgotPassword() {
           </form>
 
           {/* Helper */}
+       <Link to={"/login"}>
           <p className="mt-6 text-center text-sm text-muted-foreground">
             Remembered your password?{" "}
             <span className="cursor-pointer text-primary hover:underline">
               Back to login
             </span>
           </p>
+       </Link>
         </div>
 
         {/* RIGHT: IMAGE */}
