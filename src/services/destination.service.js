@@ -54,6 +54,7 @@ export async function getFeaturedDestination() {
 
 /* ---------- Filter by tag ---------- */
 export async function getByTag(tag) {
+  console.log(tag)
   try {
     const res = await databases.listDocuments(
       DATABASES_ID,

@@ -11,7 +11,6 @@ export default function Home() {
     <>
       {/* Hero section */}
       <HeroSection />
-      <SearchBar />
 
       {/* Must visit palces  */}
       <MustVisitCarousel />
