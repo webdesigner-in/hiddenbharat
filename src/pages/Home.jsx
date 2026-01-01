@@ -1,5 +1,4 @@
 import HeroSection from "@/components/Home/HeroSection";
-import SearchBar from "@/components/Home/SearchBar";
 import MustVisitCarousel from "@/components/Home/FeaturedCrousel";
 import WhyUs from "@/components/Home/WhyUs";
 import WantToConnect from "@/components/Home/WantToConnect";
