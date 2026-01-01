@@ -15,13 +15,9 @@ export default function PlaceCarousel({ data }) {
   return (
     <div className="relative group overflow-hidden">
       <Carousel opts={{ align: "start", loop: false }} className="w-full">
-        <CarouselPrevious
-          className="z-20 left-2 md:left-4 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity"
-        />
+        <CarouselPrevious className="z-20 left-2 md:left-4 hidden md:flex  opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity" />
 
-        <CarouselNext
-          className="z-20 right-2 md:right-4 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity"
-        />
+        <CarouselNext className="z-20 right-2 hidden md:flex md:right-4 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity" />
 
         <CarouselContent className="gap-4">
           {data.map((place) => (

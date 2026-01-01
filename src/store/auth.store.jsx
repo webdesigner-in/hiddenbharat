@@ -56,6 +56,7 @@ export function AuthProvider({ children }) {
       `${window.location.origin}/dashboard`,
       `${window.location.origin}/login`
     );
+   
   }
 
   /* ---------- Logout ---------- */

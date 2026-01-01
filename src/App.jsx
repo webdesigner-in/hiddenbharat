@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import PublicRoute from "./routes/PublicRoutes";
+import NotFound from "./pages/NotFound";
 function App() {
   return (
     <Routes>
@@ -71,6 +72,7 @@ function App() {
           </SecureRoute>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

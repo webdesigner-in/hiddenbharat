@@ -17,7 +17,7 @@ export default function PlaceCard({ place }) {
       <div className="p-4">
         {/* Categories */}
         <div className="mb-2 flex flex-wrap gap-2">
-          {place.categories.slice(0, 3).map((cat) => (
+          {place.tags.slice(0, 3).map((cat) => (
             <Badge key={cat} variant="secondary">
               {cat}
             </Badge>
