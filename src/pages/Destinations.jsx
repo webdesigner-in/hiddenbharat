@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { Search, MapPinOff } from "lucide-react";
+
 import PlaceCarousel from "@/components/Destinations/PlaceCrousel";
 import { getAllDestinations } from "@/services/destination.service";
 import { cn } from "@/lib/utils";
-import { Search } from "lucide-react";
 
 const TAGS = [
   "all",
@@ -14,8 +15,32 @@ const TAGS = [
   "heritage",
 ];
 
-function Section({ title, description, data }) {
-  if (!data.length) return null;
+/* ---------------- Empty State ---------------- */
+function EmptyState({ query, tag }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <MapPinOff className="mb-4 h-10 w-10 text-muted-foreground" />
+
+      <h3 className="text-lg font-semibold">No destinations found</h3>
+
+      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+        {query
+          ? `We couldn’t find any destinations matching “${query}”.`
+          : `No destinations available for the selected filter.`}
+      </p>
+
+      <p className="mt-1 text-sm text-muted-foreground">
+        Try adjusting your search or selecting a different category.
+      </p>
+    </div>
+  );
+}
+
+/* ---------------- Section ---------------- */
+function Section({ title, description, data, query, tag }) {
+  if (!data.length) {
+    return <EmptyState query={query} tag={tag} />;
+  }
 
   return (
     <section className="py-8">
@@ -30,6 +55,7 @@ function Section({ title, description, data }) {
   );
 }
 
+/* ---------------- Page ---------------- */
 export default function Destinations() {
   const [all, setAll] = useState([]);
   const [activeTag, setActiveTag] = useState("all");
@@ -46,7 +72,7 @@ export default function Destinations() {
     load();
   }, []);
 
-  /* ---------------- FILTER + SEARCH LOGIC ---------------- */
+  /* ---------------- Filter + Search Logic ---------------- */
   const filteredDestinations = useMemo(() => {
     let result = all;
 
@@ -60,14 +86,8 @@ export default function Destinations() {
     // Search filter
     if (query.trim()) {
       const q = query.toLowerCase();
-
       result = result.filter((d) =>
-        [
-          d.name,
-          d.state,
-          d.region,
-          d.description,
-        ]
+        [d.name, d.state, d.region, d.description]
           .join(" ")
           .toLowerCase()
           .includes(q)
@@ -87,7 +107,7 @@ export default function Destinations() {
 
   return (
     <main>
-      {/* HEADER */}
+      {/* ---------- HEADER ---------- */}
       <section className="py-8">
         <div className="mx-auto max-w-7xl px-6">
           <h1 className="text-4xl font-semibold">Destinations</h1>
@@ -97,7 +117,7 @@ export default function Destinations() {
         </div>
       </section>
 
-      {/* SEARCH + FILTER BAR */}
+      {/* ---------- SEARCH + FILTER ---------- */}
       <section className="pb-6">
         <div className="mx-auto max-w-7xl px-6 space-y-4">
           {/* Search */}
@@ -139,7 +159,7 @@ export default function Destinations() {
         </div>
       </section>
 
-      {/* RESULTS */}
+      {/* ---------- RESULTS ---------- */}
       <Section
         title={
           query
@@ -158,6 +178,8 @@ export default function Destinations() {
             : `Destinations tagged with ${activeTag}`
         }
         data={filteredDestinations}
+        query={query}
+        tag={activeTag}
       />
     </main>
   );
