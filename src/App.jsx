@@ -14,6 +14,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import PublicRoute from "./routes/PublicRoutes";
 import NotFound from "./pages/NotFound";
+import StoryDetail from "./pages/StoryDetail";
 function App() {
   return (
     <Routes>
@@ -53,6 +54,7 @@ function App() {
       <Route path="/destinations" element={<Destinations />} />
       <Route path="/packages" element={<Packages />} />
       <Route path="/stories" element={<Stories />} />
+      <Route path="/stories/:slug" element={<StoryDetail />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route

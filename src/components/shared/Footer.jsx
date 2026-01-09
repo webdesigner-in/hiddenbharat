@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-3">
           {/* Brand */}
           <div>
-            <img className="w-14 h-14 object-contain" src="logo.png" alt="HiddenBharat Logo"/>
+            <img className="w-14 h-14 object-contain" src="/logo.png" alt="HiddenBharat Logo"/>
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               Connecting travelers with authentic, meaningful journeys across
               India — while supporting local communities and sustainable travel.
