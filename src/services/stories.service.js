@@ -9,7 +9,7 @@ function normalizeStory(doc) {
     id: doc.$id,
     title: doc.title,
     excerpt: doc.excerpt,
-    image: doc.images?.[0] || "/placeholder.jpg",
+    image: doc.images || "/placeholder.jpg",
     votes: doc.votes ?? 0,
     trending: doc.isTrending,
     slug: doc.slug,

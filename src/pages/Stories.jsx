@@ -168,7 +168,6 @@ function StoryCard({ story, onVote }) {
 }
 
 function StoryJournalCard({ story, onVote }) {
-  console.log(story.slug);
   return (
     <article>
       <img
