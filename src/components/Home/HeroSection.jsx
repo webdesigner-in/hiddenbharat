@@ -9,7 +9,7 @@ export default function HeroSection() {
         <h1 className="text-5xl md:text-8xl font-bold  ">
           Uncover{" "}
           <span className="bg-orange-400 text-transparent bg-clip-text">
-            India's
+            Bharat's
           </span>{" "}
           <br />
           Hidden{" "}
