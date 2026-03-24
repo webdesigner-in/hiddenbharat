@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { LayoutDashboard, User, LogOut } from "lucide-react";
+import { LayoutDashboard, Compass, LogOut } from "lucide-react";
 import { useAuth } from "@/store/auth.store";
 
 /* ---------- Helper ---------- */
@@ -104,12 +104,12 @@ export default function ProfileComponent() {
 
             <li>
               <Link
-                to="/profile"
+                to="/destinations"
                 className="flex items-center gap-3 px-5 py-3 hover:bg-black/5 dark:hover:bg-white/10"
                 onClick={() => setOpen(false)}
               >
-                <User size={18} />
-                Manage Profile
+                <Compass size={18} />
+                Explore Destinations
               </Link>
             </li>
 

@@ -7,16 +7,13 @@ import HowWeWork from "@/components/Home/HowWeWork";
 
 export default function Home() {
   return (
-    <>
-      {/* Hero section */}
+    <main className="overflow-hidden">
       <HeroSection />
-
-      {/* Must visit palces  */}
       <MustVisitCarousel />
       <HowWeWork />
       <WhyUs />
       <ReviewsSection />
       <WantToConnect />
-    </>
+    </main>
   );
 }

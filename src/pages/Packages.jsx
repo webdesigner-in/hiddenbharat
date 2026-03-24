@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { getAllPackages } from "@/services/packages.service";
 
-/* ---------- THEMES ---------- */
 const THEMES = ["all", "mountains", "beach", "heritage", "spiritual"];
 
 export default function Packages() {
@@ -23,23 +23,17 @@ export default function Packages() {
     load();
   }, []);
 
-  /* ---------- SEARCH + FILTER ---------- */
   const filteredPackages = useMemo(() => {
     let result = packages;
 
     if (activeTheme !== "all") {
-      result = result.filter(
-        (p) => p.theme.toLowerCase() === activeTheme
-      );
+      result = result.filter((p) => p.theme.toLowerCase() === activeTheme);
     }
 
     if (query.trim()) {
       const q = query.toLowerCase();
       result = result.filter((p) =>
-        [p.title, p.description, p.theme]
-          .join(" ")
-          .toLowerCase()
-          .includes(q)
+        [p.title, p.description, p.theme].join(" ").toLowerCase().includes(q)
       );
     }
 
@@ -49,111 +43,112 @@ export default function Packages() {
   if (loading) {
     return (
       <div className="flex h-[60vh] items-center justify-center text-muted-foreground">
-        Loading packages…
+        Loading packages...
       </div>
     );
   }
 
   return (
-    <main className="relative overflow-hidden">
-      {/* ---------- PREMIUM BACKGROUND ---------- */}
+    <main className="relative overflow-hidden pb-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-orange-400/20 blur-[140px]" />
-        <div className="absolute bottom-0 right-0 h-105 w-105 rounded-full bg-amber-300/20 blur-[140px]" />
+        <div className="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-orange-400/20 blur-[140px]" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-300/20 blur-[140px]" />
       </div>
 
-      {/* ---------- HEADER ---------- */}
-      <section className="py-16">
-        <div className="mx-auto max-w-7xl px-6">
-          <h1 className="text-4xl font-semibold md:text-5xl">
-            Curated Travel Packages
+      <section className="px-4 pb-8 pt-10 sm:px-6 lg:px-8 lg:pt-14">
+        <div className="mx-auto max-w-7xl rounded-[2rem] border border-orange-100/80 bg-[linear-gradient(135deg,rgba(255,247,237,0.92),rgba(255,255,255,0.96))] p-6 shadow-sm sm:p-8">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-medium text-orange-700 shadow-sm">
+            <Sparkles className="size-4" />
+            Curated travel packages
+          </div>
+          <h1 className="mt-5 text-4xl font-semibold tracking-tight text-stone-900 md:text-5xl">
+            Packages designed around pace, not pressure
           </h1>
-          <p className="mt-4 max-w-2xl text-muted-foreground">
-            Journeys designed to adapt to your pace, not rush it.
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
+            Discover journeys built for atmosphere, comfort, and meaningful
+            travel across India's quieter landscapes.
           </p>
-        </div>
-      </section>
 
-      {/* ---------- SEARCH + FILTER ---------- */}
-      <section className="pb-8">
-        <div className="mx-auto max-w-7xl px-6 space-y-4">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search packages, experiences, themes…"
-              className="w-full rounded-full border bg-background/70 pl-10 pr-4 py-2 text-sm backdrop-blur focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
+          <div className="mt-8 space-y-4">
+            <div className="relative max-w-lg">
+              <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search packages, experiences, themes..."
+                className="w-full rounded-full border border-orange-100 bg-white pl-11 pr-4 py-3 text-sm shadow-sm outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
 
-          <div className="flex flex-wrap gap-2">
-            {THEMES.map((t) => (
-              <button
-                key={t}
-                onClick={() => setActiveTheme(t)}
-                className={cn(
-                  "rounded-full border px-4 py-1.5 text-sm transition backdrop-blur",
-                  activeTheme === t
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-background/70 text-muted-foreground hover:bg-muted"
-                )}
-              >
-                {t === "all"
-                  ? "All"
-                  : t.charAt(0).toUpperCase() + t.slice(1)}
-              </button>
-            ))}
+            <div className="flex flex-wrap gap-2">
+              {THEMES.map((theme) => (
+                <button
+                  key={theme}
+                  onClick={() => setActiveTheme(theme)}
+                  className={cn(
+                    "rounded-full border px-4 py-2 text-sm transition",
+                    activeTheme === theme
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-orange-100 bg-white text-muted-foreground hover:bg-orange-50"
+                  )}
+                >
+                  {theme === "all"
+                    ? "All"
+                    : theme.charAt(0).toUpperCase() + theme.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ---------- PACKAGES GRID ---------- */}
-      <section className="pb-32">
-        <div className="mx-auto max-w-7xl px-6 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {filteredPackages.map((pkg) => (
-            <div
+            <article
               key={pkg.id}
-              className="group overflow-hidden rounded-2xl border bg-background/70 backdrop-blur transition hover:shadow-xl"
+              className="group overflow-hidden rounded-[1.75rem] border border-orange-100/80 bg-white/90 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
             >
-              {/* IMAGE GRID */}
-              <div className="h-56 overflow-hidden">
-                {pkg.images.map((img, i) => (
+              <div className="h-56 overflow-hidden bg-orange-50">
+                {pkg.images?.[0] ? (
                   <img
-                    key={i}
-                    src={img}
+                    src={pkg.images[0]}
                     alt={pkg.title}
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   />
-                ))}
+                ) : (
+                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                    No image available
+                  </div>
+                )}
               </div>
 
-              {/* CONTENT */}
               <div className="p-6">
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs uppercase tracking-[0.22em] text-orange-700/70">
                   {pkg.theme} • {pkg.days}
                 </p>
 
-                <h3 className="mt-2 text-xl font-semibold">
+                <h3 className="mt-3 text-xl font-semibold text-stone-900">
                   {pkg.title}
                 </h3>
 
-                <p className="mt-3 text-sm text-muted-foreground">
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
                   {pkg.description}
                 </p>
 
                 <div className="mt-6 flex justify-end">
-                  <Button size="sm">Explore Package</Button>
+                  <Button size="sm" className="rounded-full px-4">
+                    Explore Package
+                  </Button>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* EMPTY STATE */}
         {!filteredPackages.length && (
-          <div className="py-24 text-center text-muted-foreground">
-            No packages match your search. Try adjusting filters.
+          <div className="mx-auto mt-8 max-w-4xl rounded-[2rem] border border-orange-100 bg-white/85 px-6 py-20 text-center text-muted-foreground shadow-sm">
+            No packages match your search. Try adjusting your filters.
           </div>
         )}
       </section>
