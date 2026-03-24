@@ -38,13 +38,15 @@ function Section({ title, description, data, query }) {
   }
 
   return (
-    <section className="pb-16">
+    <section className="pb-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="mb-2 text-2xl font-semibold text-stone-900">{title}</h2>
         <p className="mb-6 max-w-xl text-sm leading-7 text-muted-foreground">
           {description}
         </p>
-        <PlaceCarousel data={data} />
+        <div className="pb-8">
+          <PlaceCarousel data={data} />
+        </div>
       </div>
     </section>
   );

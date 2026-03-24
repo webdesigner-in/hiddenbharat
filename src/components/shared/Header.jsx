@@ -1,10 +1,8 @@
 "use client";
 
-"use client";
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LogIn, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -13,15 +11,19 @@ import ProfileComponent from "./ProfileComponent";
 import { useAuth } from "@/store/auth.store";
 import { navlinks } from "@/data";
 
-function Header() {
+export default function Header() {
   const [open, setOpen] = useState(false);
   const { user } = useAuth();
+
+  function toggle() {
+    setOpen((prev) => !prev);
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3">
-          <img src="/logo.png" alt="HiddenBharat" className="h-9 w-9 object-contain" />
+          <img src="/logo.png" alt="HiddenBharat" className="h-8 w-8 object-contain" />
           <span className="text-sm font-semibold tracking-[0.24em] text-stone-900">
             HIDDENBHARAT
           </span>
@@ -50,33 +52,29 @@ function Header() {
           )}
         </div>
 
-        <Button
-          size="icon"
-          variant="ghost"
-          className="md:hidden"
-          onClick={() => setOpen((prev) => !prev)}
-        >
+        <Button size="icon" variant="ghost" className="md:hidden" onClick={toggle}>
           {open ? <X /> : <Menu />}
         </Button>
       </nav>
 
       {open && (
-        <div className="md:hidden border-t border-muted/40 bg-background/90 px-4">
-          <div className="flex flex-col gap-2 py-3 text-sm">
+        <div className="md:hidden border-t border-muted/40 bg-background/95 px-4 py-4">
+          <div className="flex flex-col gap-2 text-sm">
             {navlinks.map((link) => (
               <Link
                 key={link.id}
                 to={link.to}
-                onClick={() => setOpen(false)}
+                onClick={toggle}
                 className="block rounded-2xl px-4 py-2 text-muted-foreground transition hover:bg-muted hover:text-foreground"
               >
                 {link.name}
               </Link>
             ))}
           </div>
-          <div className="border-t border-muted/30 pt-3">
+
+          <div className="mt-4 border-t border-muted/30 pt-4">
             {!user ? (
-              <Link to="/login" onClick={() => setOpen(false)}>
+              <Link to="/login" onClick={toggle}>
                 <Button className="w-full">Sign In</Button>
               </Link>
             ) : (
@@ -88,5 +86,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

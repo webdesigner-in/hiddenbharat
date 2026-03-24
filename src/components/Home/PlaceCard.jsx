@@ -1,11 +1,11 @@
-import { MapPin, Mountain, Sparkles } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export default function PlaceCard({ place }) {
   return (
-    <article className="  overflow-hidden rounded-[1.75rem] border border-orange-100/70 bg-white/90 shadow-sm transition">
+    <article className="h-full overflow-hidden rounded-[1.75rem] border border-orange-100/70 bg-white/90 shadow-sm transition mb-6">
       <div className="relative h-56 w-full overflow-hidden">
         <img
           src={place.image}
@@ -14,7 +14,7 @@ export default function PlaceCard({ place }) {
         />
         <div className="absolute inset-0 bg-linear-to-t from-stone-950/70 via-stone-950/20 to-transparent" />
 
-        
+       
 
         <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3 text-white">
           <div>
@@ -25,7 +25,7 @@ export default function PlaceCard({ place }) {
             </p>
           </div>
 
-         
+          
         </div>
       </div>
 
